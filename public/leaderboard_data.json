@@ -1,0 +1,452 @@
+[
+  {
+    "user_name": "Rita Evans",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 9787,
+    "country": "India",
+    "badge": "Silver",
+    "last_active": "2025-07-15T07:05:48.301048Z",
+    "rank": 1
+  },
+  {
+    "user_name": "Rita King",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 9767,
+    "country": "Australia",
+    "badge": "Bronze",
+    "last_active": "2025-07-15T07:05:48.301314Z",
+    "rank": 2
+  },
+  {
+    "user_name": "Emily Brown",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 9666,
+    "country": "Germany",
+    "badge": "Rookie",
+    "last_active": "2025-07-06T07:05:48.301322Z",
+    "rank": 3
+  },
+  {
+    "user_name": "Alex Ray",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 9487,
+    "country": "Germany",
+    "badge": "Platinum",
+    "last_active": "2025-07-13T07:05:48.301398Z",
+    "rank": 4
+  },
+  {
+    "user_name": "Sarah Taylor",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 9455,
+    "country": "UK",
+    "badge": "Gold",
+    "last_active": "2025-07-15T07:05:48.300797Z",
+    "rank": 5
+  },
+  {
+    "user_name": "John Smith",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 9222,
+    "country": "Australia",
+    "badge": "Rookie",
+    "last_active": "2025-07-09T07:05:48.301358Z",
+    "rank": 6
+  },
+  {
+    "user_name": "Tommy Doe",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 8871,
+    "country": "Brazil",
+    "badge": "Diamond",
+    "last_active": "2025-07-07T07:05:48.301021Z",
+    "rank": 7
+  },
+  {
+    "user_name": "Rita Brown",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 8309,
+    "country": "Australia",
+    "badge": "Silver",
+    "last_active": "2025-07-05T07:05:48.301101Z",
+    "rank": 8
+  },
+  {
+    "user_name": "Dan Ray",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 7926,
+    "country": "USA",
+    "badge": "Bronze",
+    "last_active": "2025-07-12T07:05:48.300998Z",
+    "rank": 9
+  },
+  {
+    "user_name": "Lucy Evans",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 7882,
+    "country": "Australia",
+    "badge": "Bronze",
+    "last_active": "2025-07-07T07:05:48.300922Z",
+    "rank": 10
+  },
+  {
+    "user_name": "Emily Smith",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 7470,
+    "country": "Brazil",
+    "badge": "Gold",
+    "last_active": "2025-07-04T07:05:48.300833Z",
+    "rank": 11
+  },
+  {
+    "user_name": "Sarah Khan",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 7406,
+    "country": "Germany",
+    "badge": "Champion",
+    "last_active": "2025-07-03T07:05:48.300905Z",
+    "rank": 12
+  },
+  {
+    "user_name": "Sarah Ali",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 7318,
+    "country": "France",
+    "badge": "Bronze",
+    "last_active": "2025-07-02T07:05:48.300875Z",
+    "rank": 13
+  },
+  {
+    "user_name": "Mike Brown",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 7312,
+    "country": "France",
+    "badge": "Champion",
+    "last_active": "2025-07-04T07:05:48.300975Z",
+    "rank": 14
+  },
+  {
+    "user_name": "Lucy Smith",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 7083,
+    "country": "Canada",
+    "badge": "Diamond",
+    "last_active": "2025-07-05T07:05:48.300854Z",
+    "rank": 15
+  },
+  {
+    "user_name": "Mike Ray",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 6852,
+    "country": "Brazil",
+    "badge": "Champion",
+    "last_active": "2025-07-01T07:05:48.301433Z",
+    "rank": 16
+  },
+  {
+    "user_name": "Lucy Taylor",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 6614,
+    "country": "Bangladesh",
+    "badge": "Diamond",
+    "last_active": "2025-07-01T07:05:48.301426Z",
+    "rank": 17
+  },
+  {
+    "user_name": "Rita King",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 6603,
+    "country": "Japan",
+    "badge": "Rookie",
+    "last_active": "2025-07-10T07:05:48.301193Z",
+    "rank": 18
+  },
+  {
+    "user_name": "Mike Morgan",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 6523,
+    "country": "France",
+    "badge": "Platinum",
+    "last_active": "2025-07-15T07:05:48.301223Z",
+    "rank": 19
+  },
+  {
+    "user_name": "Rita Doe",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 6389,
+    "country": "Germany",
+    "badge": "Platinum",
+    "last_active": "2025-06-30T07:05:48.301268Z",
+    "rank": 20
+  },
+  {
+    "user_name": "John Morgan",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 6315,
+    "country": "USA",
+    "badge": "Rookie",
+    "last_active": "2025-07-09T07:05:48.301006Z",
+    "rank": 21
+  },
+  {
+    "user_name": "Alex Smith",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 6087,
+    "country": "Australia",
+    "badge": "Silver",
+    "last_active": "2025-07-14T07:05:48.301086Z",
+    "rank": 22
+  },
+  {
+    "user_name": "Sarah Taylor",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 5989,
+    "country": "India",
+    "badge": "Champion",
+    "last_active": "2025-07-12T07:05:48.301365Z",
+    "rank": 23
+  },
+  {
+    "user_name": "Alex Smith",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 5833,
+    "country": "Brazil",
+    "badge": "Champion",
+    "last_active": "2025-07-10T07:05:48.300939Z",
+    "rank": 24
+  },
+  {
+    "user_name": "Mike Evans",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 5486,
+    "country": "UK",
+    "badge": "Rookie",
+    "last_active": "2025-07-08T07:05:48.300954Z",
+    "rank": 25
+  },
+  {
+    "user_name": "Emily Ali",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 5302,
+    "country": "Canada",
+    "badge": "Platinum",
+    "last_active": "2025-07-14T07:05:48.301472Z",
+    "rank": 26
+  },
+  {
+    "user_name": "Lucy Brown",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 5265,
+    "country": "Canada",
+    "badge": "Champion",
+    "last_active": "2025-07-14T07:05:48.301062Z",
+    "rank": 27
+  },
+  {
+    "user_name": "Sarah Evans",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 5205,
+    "country": "Bangladesh",
+    "badge": "Rookie",
+    "last_active": "2025-07-13T07:05:48.301337Z",
+    "rank": 28
+  },
+  {
+    "user_name": "Lucy Ray",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 5168,
+    "country": "Australia",
+    "badge": "Gold",
+    "last_active": "2025-07-04T07:05:48.301077Z",
+    "rank": 29
+  },
+  {
+    "user_name": "Lucy Doe",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 5090,
+    "country": "India",
+    "badge": "Platinum",
+    "last_active": "2025-07-10T07:05:48.301459Z",
+    "rank": 30
+  },
+  {
+    "user_name": "Dan Smith",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 5065,
+    "country": "Brazil",
+    "badge": "Rookie",
+    "last_active": "2025-07-06T07:05:48.301372Z",
+    "rank": 31
+  },
+  {
+    "user_name": "Dan Taylor",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 4099,
+    "country": "France",
+    "badge": "Champion",
+    "last_active": "2025-07-09T07:05:48.301390Z",
+    "rank": 32
+  },
+  {
+    "user_name": "Rita Brown",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 4001,
+    "country": "Australia",
+    "badge": "Gold",
+    "last_active": "2025-07-14T07:05:48.301013Z",
+    "rank": 33
+  },
+  {
+    "user_name": "Alex Brown",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 3895,
+    "country": "Australia",
+    "badge": "Platinum",
+    "last_active": "2025-07-13T07:05:48.301300Z",
+    "rank": 34
+  },
+  {
+    "user_name": "Alex Taylor",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 3873,
+    "country": "Japan",
+    "badge": "Bronze",
+    "last_active": "2025-07-05T07:05:48.300983Z",
+    "rank": 35
+  },
+  {
+    "user_name": "Alex Smith",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 3862,
+    "country": "UK",
+    "badge": "Champion",
+    "last_active": "2025-07-05T07:05:48.301445Z",
+    "rank": 36
+  },
+  {
+    "user_name": "Dan Evans",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 3351,
+    "country": "France",
+    "badge": "Champion",
+    "last_active": "2025-07-04T07:05:48.300991Z",
+    "rank": 37
+  },
+  {
+    "user_name": "Sana Morgan",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 3148,
+    "country": "Japan",
+    "badge": "Platinum",
+    "last_active": "2025-06-30T07:05:48.301238Z",
+    "rank": 38
+  },
+  {
+    "user_name": "Rita King",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 2595,
+    "country": "Japan",
+    "badge": "Gold",
+    "last_active": "2025-07-12T07:05:48.301293Z",
+    "rank": 39
+  },
+  {
+    "user_name": "Rita Khan",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 2565,
+    "country": "USA",
+    "badge": "Champion",
+    "last_active": "2025-07-01T07:05:48.301094Z",
+    "rank": 40
+  },
+  {
+    "user_name": "Alex Khan",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 2508,
+    "country": "Germany",
+    "badge": "Rookie",
+    "last_active": "2025-07-06T07:05:48.301413Z",
+    "rank": 41
+  },
+  {
+    "user_name": "Alex King",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 2449,
+    "country": "India",
+    "badge": "Rookie",
+    "last_active": "2025-07-05T07:05:48.301330Z",
+    "rank": 42
+  },
+  {
+    "user_name": "Alex Smith",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 2096,
+    "country": "Germany",
+    "badge": "Silver",
+    "last_active": "2025-07-15T07:05:48.301307Z",
+    "rank": 43
+  },
+  {
+    "user_name": "Lucy Taylor",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 1809,
+    "country": "Canada",
+    "badge": "Rookie",
+    "last_active": "2025-07-05T07:05:48.301351Z",
+    "rank": 44
+  },
+  {
+    "user_name": "Rita Doe",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 1750,
+    "country": "India",
+    "badge": "Platinum",
+    "last_active": "2025-06-30T07:05:48.301033Z",
+    "rank": 45
+  },
+  {
+    "user_name": "Dan King",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 1386,
+    "country": "Canada",
+    "badge": "Platinum",
+    "last_active": "2025-07-06T07:05:48.301406Z",
+    "rank": 46
+  },
+  {
+    "user_name": "Emily Taylor",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 1146,
+    "country": "Germany",
+    "badge": "Silver",
+    "last_active": "2025-06-30T07:05:48.300890Z",
+    "rank": 47
+  },
+  {
+    "user_name": "Tommy Morgan",
+    "profile": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg",
+    "wx_earned": 887,
+    "country": "France",
+    "badge": "Diamond",
+    "last_active": "2025-07-14T07:05:48.301344Z",
+    "rank": 48
+  },
+  {
+    "user_name": "Tommy Smith",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 534,
+    "country": "UK",
+    "badge": "Champion",
+    "last_active": "2025-07-02T07:05:48.301252Z",
+    "rank": 49
+  },
+  {
+    "user_name": "Emily Khan",
+    "profile": "https://pressxpress.org/wp-content/uploads/2022/04/ns.jpg",
+    "wx_earned": 456,
+    "country": "Bangladesh",
+    "badge": "Platinum",
+    "last_active": "2025-07-02T07:05:48.301286Z",
+    "rank": 50
+  }
+]

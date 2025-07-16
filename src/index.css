@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+
+
+
+
+
+/* Custom styles for the sidebar */
+.ant-menu-dark {
+  background-color: #2E3F49;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: #CB5D00 !important;
+}
+
+.ant-menu-dark .ant-menu-item:hover {
+  background-color: #CB5D00 !important;
+  color: #F3F3F3 !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-title:hover {
+  background-color: #CB5D00 !important;
+  color: #F3F3F3 !important;
+}
+
+.ant-menu-dark .ant-menu-item a {
+  color: #F3F3F3;
+}
+
+.ant-menu-dark .ant-menu-item-selected a {
+  color: #F3F3F3 !important;
+}
+
+
+
+/* For the Settings submenu header */
+.ant-menu-dark .ant-menu-submenu-title {
+  background-color: #2E3F49 !important;
+}
+
+/* For the Settings submenu items */
+.ant-menu-dark .ant-menu-submenu .ant-menu-item {
+  background-color: #2E3F49 !important;
+}
+
+/* Hover state for submenu items */
+.ant-menu-dark .ant-menu-submenu .ant-menu-item:hover {
+  background-color: #CB5D00 !important;
+}
+
+/* Selected state for submenu items */
+.ant-menu-dark .ant-menu-submenu .ant-menu-item-selected {
+  background-color: #CB5D00 !important;
+}
