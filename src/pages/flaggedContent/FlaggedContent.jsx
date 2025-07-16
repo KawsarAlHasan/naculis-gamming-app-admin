@@ -80,7 +80,6 @@ function FlaggedContentPage() {
       render: (_, record) => (
         <Space size="middle">
           <EyeOutlined className="text-[23px]" />
-          <DeleteOutlined className="text-[23px] text-red-400 hover:text-red-300" />
         </Space>
       ),
     },
