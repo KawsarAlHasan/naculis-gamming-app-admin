@@ -46,7 +46,6 @@ export const getMockFlaggedContent = async ({ page = 1, limit = 10 }) => {
   };
 };
 
-
 // Payouts List
 export const getMockPayouts = async ({ page = 1, limit = 10 }) => {
   const res = await axios.get("/payouts_data.json");
@@ -67,7 +66,6 @@ export const getMockPayouts = async ({ page = 1, limit = 10 }) => {
     },
   };
 };
-
 
 // Tasks List
 export const getMockTasks = async ({ page = 1, limit = 10 }) => {
@@ -90,7 +88,6 @@ export const getMockTasks = async ({ page = 1, limit = 10 }) => {
   };
 };
 
-
 // leaderboard List
 export const getMockLeaderboard = async ({ page = 1, limit = 10 }) => {
   const res = await axios.get("/leaderboard_data.json");
@@ -112,15 +109,19 @@ export const getMockLeaderboard = async ({ page = 1, limit = 10 }) => {
   };
 };
 
+// terms and conditions
+export const getMockTermsConditions = async () => {
+  const response = await axios.get("/terms_condition.json");
 
+  return response.data;
+};
 
+// privacy policy
+export const getMockPrivacyPolicy = async () => {
+  const response = await axios.get("/privacy_policy.json");
 
-
-
-
-
-
-
+  return response.data;
+};
 
 
 // export const API = axios.create({

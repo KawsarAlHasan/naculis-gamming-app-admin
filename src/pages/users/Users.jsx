@@ -23,7 +23,7 @@ function UsersPage() {
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [userDetailsData, setUserDetailsData] = useState(null);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [blockLoading, setBlockLoading] = useState(false);
 
   const { allUsers, pagination, isLoading, isError, error, refetch } =
     useAllUsers(filter);
@@ -45,17 +45,17 @@ function UsersPage() {
       title: "Are you sure you want to Block this user?",
       icon: <ExclamationCircleOutlined />,
       content: "Do you want to Block this user?",
-      okText: "Yes, Delete",
+      okText: "Yes, Block",
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
-        handleDelete(id);
+        handleBlock(id);
       },
     });
   };
 
-  const handleDelete = async (id) => {
-    setDeleteLoading(true);
+  const handleBlock = async (id) => {
+    setBlockLoading(true);
     try {
       console.log(id);
       // await API.delete(`/courses/delete/${id}`);
@@ -64,7 +64,7 @@ function UsersPage() {
     } catch (error) {
       openNotification("error", "Error", "Failed to block user");
     } finally {
-      setDeleteLoading(false);
+      setBlockLoading(false);
     }
   };
 
@@ -88,7 +88,7 @@ function UsersPage() {
 
   const columns = [
     {
-      title: <span className="text-[20px]">User</span>,
+      title: <span className="text-[20px] !text-center">User</span>,
       dataIndex: "name",
       key: "name",
       render: (text, record) => (
@@ -152,7 +152,7 @@ function UsersPage() {
 
           <MdBlock
             className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
-            loading={deleteLoading}
+            loading={blockLoading}
             onClick={() => showDeleteConfirm(record.id)}
           />
         </Space>

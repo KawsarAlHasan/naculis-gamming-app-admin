@@ -136,6 +136,11 @@ const MainLayout = () => {
           color: white !important;
           border-bottom: 1px solid #5d6d7e;
         }
+
+        .custom-dark-table .ant-table-thead > tr > th::before {
+          display: none !important;
+        }
+
         .custom-dark-table .ant-table-tbody > tr > td {
           background-color: #4f6572;
           border-bottom: 1px solid #5d6d7e;

@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { Table, Tag, Space, Avatar } from "antd";
-import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { Table, Tag, Space, Avatar, Modal, notification } from "antd";
+import { DeleteOutlined, ExclamationCircleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useAllLeaderboard } from "../../services/leaderboardService";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { MdBlock } from "react-icons/md";
+import UserDetails from "./UserDetails";
+
+const { confirm } = Modal;
 
 dayjs.extend(relativeTime);
 
@@ -13,11 +17,62 @@ function LeaderboardPage() {
     limit: 10,
   });
 
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [userDetailsData, setUserDetailsData] = useState(null);
+  const [blockLoading, setBlockLoading] = useState(false);
+
   const { allLeaderboard, pagination, isLoading, isError, error, refetch } =
     useAllLeaderboard(filter);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
+
+  const openNotification = (type, message, description) => {
+    notification[type]({
+      message,
+      description,
+      placement: "topRight",
+      duration: 3,
+    });
+  };
+
+  const showDeleteConfirm = (id) => {
+    confirm({
+      title: "Are you sure you want to Block this user?",
+      icon: <ExclamationCircleOutlined />,
+      content: "Do you want to Block this user?",
+      okText: "Yes, Block",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk() {
+        handleBlock(id);
+      },
+    });
+  };
+
+  const handleBlock = async (id) => {
+    setBlockLoading(true);
+    try {
+      console.log(id);
+      // await API.delete(`/courses/delete/${id}`);
+      openNotification("success", "Success", "User blocked successfully");
+      refetch();
+    } catch (error) {
+      openNotification("error", "Error", "Failed to block user");
+    } finally {
+      setBlockLoading(false);
+    }
+  };
+
+  const handleUserDetails = (userData) => {
+    setUserDetailsData(userData);
+    setIsViewModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setUserDetailsData(null);
+    setIsViewModalOpen(false);
+  };
 
   const handleTableChange = (pagination) => {
     setFilter((prev) => ({
@@ -84,8 +139,16 @@ function LeaderboardPage() {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <EyeOutlined className="text-[23px]" />
-          <DeleteOutlined className="text-[23px] text-red-400 hover:text-red-300" />
+          <EyeOutlined
+            onClick={() => handleUserDetails(record)}
+            className="text-[23px] cursor-pointer"
+          />
+
+          <MdBlock
+            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
+            loading={blockLoading}
+            onClick={() => showDeleteConfirm(1)}
+          />
         </Space>
       ),
     },
@@ -109,6 +172,12 @@ function LeaderboardPage() {
         // bordered
         className="custom-dark-table"
         rowClassName={() => "dark-table-row"}
+      />
+
+      <UserDetails
+        userDetailsData={userDetailsData}
+        isOpen={isViewModalOpen}
+        onClose={handleModalClose}
       />
     </div>
   );

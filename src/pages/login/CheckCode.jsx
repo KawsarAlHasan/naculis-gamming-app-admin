@@ -91,7 +91,7 @@ const CheckCode = () => {
               size="large"
               block
               loading={loading}
-              className="h-12 font-semibold text-lg"
+              className="h-12 font-semibold text-lg my-main-button"
             >
               {loading ? "Verifying..." : "Verify Code"}
             </Button>

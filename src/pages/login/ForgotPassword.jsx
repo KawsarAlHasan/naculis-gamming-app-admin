@@ -76,7 +76,7 @@ const ForgotPassword = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="w-full py-6 text-[18px] font-semibold"
+                  className="w-full py-6 text-[18px] font-semibold my-main-button"
                   loading={loading}
                 >
                   {loading ? "Sending..." : "Send a Code"}

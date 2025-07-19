@@ -45,9 +45,9 @@ function UserDetailsModal({ userDetailsData, isOpen, onClose }) {
       width={600}
       className="user-details-modal"
     >
-      <Text type="secondary" className="block mb-6">
+      {/* <Text type="secondary" className="block mb-6">
         Detailed information about {userDetailsData?.name}
-      </Text>
+      </Text> */}
 
       <div className="text-center mb-6">
         <Avatar
@@ -55,7 +55,7 @@ function UserDetailsModal({ userDetailsData, isOpen, onClose }) {
           src={<img src={userDetailsData?.profile} alt="avatar" />}
           className="border-2 border-[#FE7400]"
         />
-        <Title level={3} className="!mt-4 !mb-1">
+        <Title level={3} className="!mt-2 !mb-1">
           {userDetailsData?.name}
         </Title>
       </div>
@@ -148,9 +148,6 @@ function UserDetailsModal({ userDetailsData, isOpen, onClose }) {
       <style jsx global>{`
         .user-details-modal .ant-modal-body {
           padding: 24px;
-        }
-        .user-details-modal .ant-divider {
-          border-top: 1px solid #f0f0f0;
         }
       `}</style>
     </Modal>

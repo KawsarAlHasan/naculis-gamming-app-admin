@@ -59,3 +59,51 @@
 .ant-menu-dark .ant-menu-submenu .ant-menu-item-selected {
   background-color: #CB5D00 !important;
 }
+
+
+
+
+
+.my-main-button {
+  color: #FEFEFE;
+  background-color: #359700;
+  border: none;
+}
+
+.my-main-button:hover {
+  background-color: #236400 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+
+.my-custom-button {
+  color: #FEFEFE;
+  background-color: #359700;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold; 
+  border: none;
+}
+
+.my-custom-button:hover {
+  background-color: #236400 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+
+.my-secondary-button {
+  color: #FE7400B2;
+  background-color: #ffffff;
+  border: 1px solid #FE7400B2;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+.my-secondary-button:hover {
+  background-color: #FE7400B2 !important;
+  color: #fff !important;
+  border: 1px solid #FE7400B2 !important;
+}

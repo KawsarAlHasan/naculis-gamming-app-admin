@@ -2,12 +2,26 @@ import { useState } from "react";
 import { Table, Tag, Space, Avatar } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { useAllPayouts } from "../../services/payoutService";
+import PayoutsDetails from "./PayoutsDetails";
 
 function PayoutsPage() {
   const [filter, setFilter] = useState({
     page: 1,
     limit: 10,
   });
+
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [detailsData, setDetailsData] = useState(null);
+
+  const handleModalClose = () => {
+    setDetailsData(null);
+    setIsViewModalOpen(false);
+  };
+
+  const handleUserDetails = (userData) => {
+    setDetailsData(userData);
+    setIsViewModalOpen(true);
+  };
 
   const { allPayouts, pagination, isLoading, isError, error, refetch } =
     useAllPayouts(filter);
@@ -40,13 +54,17 @@ function PayoutsPage() {
       title: <span className="text-[20px]">Amount</span>,
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => <span className="text-white text-[16px]">${amount}</span>,
+      render: (amount) => (
+        <span className="text-white text-[16px]">${amount}</span>
+      ),
     },
     {
       title: <span className="text-[20px]">method</span>,
       dataIndex: "method",
       key: "method",
-      render: (method) => <span className="text-white text-[16px]">{method}</span>,
+      render: (method) => (
+        <span className="text-white text-[16px]">{method}</span>
+      ),
     },
     {
       title: <span className="text-[20px]">Date</span>,
@@ -72,10 +90,17 @@ function PayoutsPage() {
     {
       title: <span className="text-[20px]">Status</span>,
       key: "status",
+      width: 120,
       render: (_, record) => (
         <Tag
-          className="w-full mr-5 text-center text-[20px] py-3"
-          color={record.status === "active" ? "#359700" : "#FE7400B2"}
+          className={`w-full text-center text-[20px] p-3 !border-[1px] ${
+            record.status === "Approved"
+              ? "!border-[#359700]"
+              : record.status === "Pending"
+              ? "!border-[#FE7400]"
+              : "!border-[#6b1c1c]"
+          }`}
+          color="#4f6572"
         >
           {record.status}
         </Tag>
@@ -86,7 +111,10 @@ function PayoutsPage() {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <EyeOutlined className="text-[23px]" />
+          <EyeOutlined
+            onClick={() => handleUserDetails(record)}
+            className="text-[23px]"
+          />
         </Space>
       ),
     },
@@ -110,6 +138,12 @@ function PayoutsPage() {
         // bordered
         className="custom-dark-table"
         rowClassName={() => "dark-table-row"}
+      />
+
+      <PayoutsDetails
+        detailsData={detailsData}
+        isOpen={isViewModalOpen}
+        onClose={handleModalClose}
       />
     </div>
   );
