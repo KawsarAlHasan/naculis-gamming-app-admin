@@ -3,6 +3,8 @@ import { Table, Tag, Space, Avatar } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { useAllFlaggedContent } from "../../services/flaggedContentService";
 import FlaggedContentDetails from "./FlaggedContentDetails";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 function FlaggedContentPage() {
   const [filter, setFilter] = useState({
@@ -21,8 +23,13 @@ function FlaggedContentPage() {
   const { allFlaggedContent, pagination, isLoading, isError, error, refetch } =
     useAllFlaggedContent(filter);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isLoading) {
+    return <IsLoading />;
+  }
+
+  if (isError) {
+    return <IsError error={error} refetch={refetch} />;
+  }
 
   const handleTableChange = (pagination) => {
     setFilter((prev) => ({
@@ -82,7 +89,11 @@ function FlaggedContentPage() {
       width: 100,
       render: (_, record) => (
         <Tag
-        className={`w-full text-center text-[20px] py-3 ${record.status === "Under Review" ? "!border-[1px] !border-[#FE7400B2]" : ""}`}
+          className={`w-full text-center text-[20px] py-3 ${
+            record.status === "Under Review"
+              ? "!border-[1px] !border-[#FE7400B2]"
+              : ""
+          }`}
           color={record.status === "Under Review" ? "#4f6572" : "#FE7400B2"}
         >
           {record.status}

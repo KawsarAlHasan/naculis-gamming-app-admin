@@ -4,6 +4,8 @@ import "react-quill/dist/quill.snow.css";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Modal, Spin, message, Form } from "antd";
 import { usePrivacyPolicy } from "../../services/privacyService";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 function PrivacyPolicy() {
   const { privacyPolicyData, isLoading, isError, error, refetch } = usePrivacyPolicy();
@@ -20,7 +22,6 @@ function PrivacyPolicy() {
     });
   };
 
-  console.log(privacyPolicyData, "privacyPolicyData");
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -49,16 +50,13 @@ function PrivacyPolicy() {
   };
 
   if (isLoading) {
-    return <Spin size="large" className="block mx-auto my-10" />;
+    return <IsLoading />;
   }
 
   if (isError) {
-    return (
-      <div className="text-center text-red-500">
-        {error.message || "Something went wrong"}
-      </div>
-    );
+    return <IsError error={error} refetch={refetch} />;
   }
+
 
   return (
     <div className=" min-h-[65vh] flex items-center justify-center">

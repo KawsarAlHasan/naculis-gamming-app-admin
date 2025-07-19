@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Table, Tag, Space, Avatar, Button, Modal, notification } from "antd";
+import {
+  Table,
+  Tag,
+  Space,
+  Avatar,
+  Button,
+  Modal,
+  notification,
+  Skeleton,
+  Alert,
+} from "antd";
 import { key } from "localforage";
 import { MdBlock } from "react-icons/md";
 import { useAllUsers } from "../../services/usersServices";
@@ -12,6 +22,8 @@ import {
   ExclamationCircleOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 const { confirm } = Modal;
 
@@ -28,8 +40,13 @@ function UsersPage() {
   const { allUsers, pagination, isLoading, isError, error, refetch } =
     useAllUsers(filter);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isLoading) {
+    return <IsLoading />;
+  }
+
+  if (isError) {
+    return <IsError error={error} refetch={refetch} />;
+  }
 
   const openNotification = (type, message, description) => {
     notification[type]({

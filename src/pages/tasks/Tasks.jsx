@@ -4,6 +4,8 @@ import { DeleteOutlined, ExclamationCircleOutlined, EyeOutlined } from "@ant-des
 import { useAllTasks } from "../../services/tasksService";
 import { MdBlock } from "react-icons/md";
 import TasksDetails from "./TasksDetails";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 const { confirm } = Modal;
 
@@ -20,8 +22,14 @@ function TasksPage() {
   const { allTasks, pagination, isLoading, isError, error, refetch } =
     useAllTasks(filter);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isLoading) {
+    return <IsLoading />;
+  }
+
+  if (isError) {
+    return <IsError error={error} refetch={refetch} />;
+  }
+
 
 
   const handleUserDetails = (userData) => {

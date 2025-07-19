@@ -3,6 +3,8 @@ import { Table, Tag, Space, Avatar } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { useAllPayouts } from "../../services/payoutService";
 import PayoutsDetails from "./PayoutsDetails";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 function PayoutsPage() {
   const [filter, setFilter] = useState({
@@ -26,8 +28,13 @@ function PayoutsPage() {
   const { allPayouts, pagination, isLoading, isError, error, refetch } =
     useAllPayouts(filter);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isLoading) {
+    return <IsLoading />;
+  }
+
+  if (isError) {
+    return <IsError error={error} refetch={refetch} />;
+  }
 
   const handleTableChange = (pagination) => {
     setFilter((prev) => ({

@@ -4,9 +4,12 @@ import "react-quill/dist/quill.snow.css";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Modal, Spin, message, Form } from "antd";
 import { useTermsConditions } from "../../services/termsCondition";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 function TermsConditions() {
-  const { termsConditionsData, isLoading, isError, error, refetch } = useTermsConditions();
+  const { termsConditionsData, isLoading, isError, error, refetch } =
+    useTermsConditions();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [content, setContent] = useState("");
@@ -49,15 +52,11 @@ function TermsConditions() {
   };
 
   if (isLoading) {
-    return <Spin size="large" className="block mx-auto my-10" />;
+    return <IsLoading />;
   }
 
   if (isError) {
-    return (
-      <div className="text-center text-red-500">
-        {error.message || "Something went wrong"}
-      </div>
-    );
+    return <IsError error={error} refetch={refetch} />;
   }
 
   return (
@@ -84,7 +83,9 @@ function TermsConditions() {
           {new Date(termsConditionsData.updated_at).toLocaleString()}
         </p>
 
-        <div dangerouslySetInnerHTML={{ __html: termsConditionsData.content }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: termsConditionsData.content }}
+        />
       </div>
 
       {/* Modal for Editing Terms */}
@@ -113,10 +114,14 @@ function TermsConditions() {
             label="Content"
             rules={[{ required: true, message: "Content is required" }]}
           >
-            <ReactQuill theme="snow" value={content} onChange={(val) => {
-              setContent(val);
-              form.setFieldsValue({ content: val }); // sync with form
-            }} />
+            <ReactQuill
+              theme="snow"
+              value={content}
+              onChange={(val) => {
+                setContent(val);
+                form.setFieldsValue({ content: val }); // sync with form
+              }}
+            />
           </Form.Item>
         </Form>
       </Modal>

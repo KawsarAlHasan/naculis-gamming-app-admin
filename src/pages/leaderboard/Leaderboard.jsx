@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Table, Tag, Space, Avatar, Modal, notification } from "antd";
-import { DeleteOutlined, ExclamationCircleOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import { useAllLeaderboard } from "../../services/leaderboardService";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { MdBlock } from "react-icons/md";
 import UserDetails from "./UserDetails";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 const { confirm } = Modal;
 
@@ -24,8 +30,13 @@ function LeaderboardPage() {
   const { allLeaderboard, pagination, isLoading, isError, error, refetch } =
     useAllLeaderboard(filter);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isLoading) {
+    return <IsLoading />;
+  }
+
+  if (isError) {
+    return <IsError error={error} refetch={refetch} />;
+  }
 
   const openNotification = (type, message, description) => {
     notification[type]({
