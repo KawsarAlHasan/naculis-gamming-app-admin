@@ -8,6 +8,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+import { signOutAdmin } from "../api/api";
 
 const Navbar = ({ showDrawer }) => {
 const navigate = useNavigate();
@@ -15,7 +16,7 @@ const navigate = useNavigate();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const handleSignOut = () => {
-    // signOutAdmin();
+    signOutAdmin();
     navigate("/login");
   };
 

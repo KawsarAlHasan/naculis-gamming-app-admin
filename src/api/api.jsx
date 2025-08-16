@@ -1,6 +1,76 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+
+export const API = axios.create({
+  baseURL: "http://103.186.20.115:9000",
+  // baseURL: "http://localhost:3001/api/v1",
+});
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+
+// get admin profile
+export const useAdminProfile = () => {
+  const getData = async () => {
+    const response = await API.get("/api/admin_dashboard/admin-profile/");
+    return response.data;
+  };
+
+  const {
+    data: admin = null,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["admin"],
+    queryFn: getData,
+  });
+
+  return { admin, isLoading, isError, error, refetch };
+};
+
+// sign out
+export const signOutAdmin = () => {
+  localStorage.removeItem("token");
+  window.location.href = "/login";
+};
+
+
+
+
+
+// get Trends
+export const useTrends = () => {
+  const getData = async () => {
+    const response = await API.get("/api/admin_dashboard/dashboard/trends/");
+    return response.data;
+  };
+
+  const {
+    data: trandsData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["trandsData"],
+    queryFn: getData,
+  });
+
+  return { trandsData, isLoading, isError, error, refetch };
+};
+
+
+
+
 // users list
 export const getMockUsers = async ({ page = 1, limit = 10 }) => {
   const res = await axios.get("/users.json");

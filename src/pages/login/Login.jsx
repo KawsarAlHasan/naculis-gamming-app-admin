@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { Link } from "react-router-dom";
-// import { API } from "../../api/api";
+import { API } from "../../api/api";
 
 const Login = () => {
   const [loading, setLoading] = useState(false); // Loading state for login button
@@ -9,23 +9,24 @@ const Login = () => {
   const onFinish = async (values) => {
     setLoading(true); // Start loading when submitting form
     try {
-      // const response = await API.post("/admin/login", {
-      //   email: values.email,
-      //   password: values.password,
-      // });
+      const response = await API.post("/api/admin_dashboard/admin-login/", {
+        email: values.email,
+        password: values.password,
+      });
 
-      // // If successful, save the token in localStorage
-      // localStorage.setItem("token", response.data.data.token);
+
+      // If successful, save the token in localStorage
+      localStorage.setItem("token", response.data.access);
 
       // Show success message
-      message.success("Login successful!");
+      message.success("Admin Login successful!");
 
       // Redirect to the admin dashboard (replace with your route)
       window.location.href = "/";
     } catch (error) {
-      // Show error message
+      
       message.error(
-         "Login failed. Please try again." // error.response?.data?.message
+         error?.response?.data?.error || "Login failed. Please try again." 
       );
     } finally {
       setLoading(false); // Stop loading after request

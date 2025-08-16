@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { Link } from "react-router-dom";
+import { API } from "../../api/api";
 
 const SetNewPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -14,24 +15,20 @@ const SetNewPassword = () => {
 
     setLoading(true); // Start loading when submitting form
     try {
+      const response = await API.post("/api/reset-password/", {
+        new_password: values.password,
+        confirm_password: values.confirmPassword,
+      });
 
-        console.log(values)
-      // const response = await API.post("/admin/set-new-password", {
-      //   password: values.password,
-      // });
-
-      // // If successful, save the token in localStorage
-      // localStorage.setItem("token", response.data.data.token);
-
-      // Show success message
-      message.success("Password updated successfully!");
-
-      // Redirect to the admin dashboard (replace with your route)
-    //   window.location.href = "/";
+      if (response.status === 200) {
+        message.success("Password updated successfully!");
+        localStorage.setItem("token", response?.data?.access_token);
+        window.location.href = "/";
+      }
     } catch (error) {
-      // Show error message
       message.error(
-        "Password update failed. Please try again." // error.response?.data?.message
+        error?.response?.data?.error ||
+          "Password update failed. Please try again."
       );
     } finally {
       setLoading(false); // Stop loading after request
@@ -68,7 +65,7 @@ const SetNewPassword = () => {
               name="password"
               rules={[
                 { required: true, message: "Please input your New Password!" },
-                { min: 6, message: "Password must be at least 6 characters" },
+                { min: 8, message: "Password must be at least 8 characters" },
               ]}
             >
               <Input.Password
@@ -85,15 +82,15 @@ const SetNewPassword = () => {
             </label>
             <Form.Item
               name="confirmPassword"
-              dependencies={['password']}
+              dependencies={["password"]}
               rules={[
                 { required: true, message: "Please confirm your password!" },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
+                    if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error('Passwords do not match!'));
+                    return Promise.reject(new Error("Passwords do not match!"));
                   },
                 }),
               ]}

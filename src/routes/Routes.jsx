@@ -15,6 +15,7 @@ import PrivacyPolicy from "../pages/privacyPolicy/PrivacyPolicy";
 import ForgotPassword from "../pages/login/ForgotPassword";
 import CheckCode from "../pages/login/CheckCode";
 import SetNewPassword from "../pages/login/SetNewPassword";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +36,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <PrivateRoute>
+        <MainLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/",

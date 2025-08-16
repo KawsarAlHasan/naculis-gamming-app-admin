@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-// import { API } from "../../api/api";
+import { API } from "../../api/api";
 
 const ForgotPassword = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false); // Loading state for login button
 
   const onFinish = async (values) => {
     setLoading(true); // Start loading when submitting form
     try {
-      // const response = await API.post("/admin/login", {
-      //   email: values.email,
-      // });
+      const response = await API.post("/api/send-otp/", {
+        email: values.email,
+      });
 
-      // // If successful, save the token in localStorage
-      // localStorage.setItem("token", response.data.data.token);
+      if (response.status === 200) {
+        message.success("Send code on your email successful!");
 
-      // Show success message
-      message.success("Send code on your email successful!");
+        localStorage.setItem("email", values.email);
 
-      navigate("/check-code");
+        navigate("/check-code");
+      }
     } catch (error) {
       // Show error message
       message.error(

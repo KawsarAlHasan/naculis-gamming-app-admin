@@ -6,7 +6,7 @@ const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />
 
 function Loading() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen bg-[#4f6572]">
       <Spin indicator={antIcon} size="large" />
       <div className="mt-4 text-lg font-medium text-white flex items-center">
         Loading

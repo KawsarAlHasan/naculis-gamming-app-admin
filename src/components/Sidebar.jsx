@@ -10,8 +10,8 @@ import { FaUsers } from "react-icons/fa";
 import { MdOutlinePayment, MdLeaderboard } from "react-icons/md";
 import { FaBuildingFlag } from "react-icons/fa6";
 import { SlBadge } from "react-icons/sl";
+import { signOutAdmin } from "../api/api";
 
-// import { signOutAdmin } from "../api/api";
 
 const { SubMenu } = Menu;
 
@@ -20,7 +20,7 @@ const Sidebar = ({ onClick }) => {
 
   const navigate = useNavigate();
   const handleSignOut = () => {
-    // signOutAdmin();
+    signOutAdmin();
     navigate("/login");
   };
 

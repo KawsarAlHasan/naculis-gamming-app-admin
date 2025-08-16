@@ -8,8 +8,12 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useTrends } from "../api/api";
 
 const XPTrendsChart = () => {
+
+const {trandsData, isLoading, isError, error, refetch}= useTrends()
+
   // Demo data that matches the screenshot structure
   const data = [
     { name: "Aug", xp: 22 },
@@ -39,6 +43,8 @@ const XPTrendsChart = () => {
 
   return null;
 };
+
+console.log("trandsData", trandsData)
 
   return (
     <div className="h-[470px] rounded-lg border-[1px] border-[#7ED321]">
