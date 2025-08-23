@@ -1,29 +1,12 @@
 import { useState } from "react";
-import {
-  Table,
-  Tag,
-  Space,
-  Avatar,
-  Button,
-  Modal,
-  notification,
-  Skeleton,
-  Alert,
-} from "antd";
-import { key } from "localforage";
+import { Table, Tag, Space, Avatar, Modal, notification } from "antd";
 import { MdBlock } from "react-icons/md";
-import { useAllUsers } from "../../services/usersServices";
 import UserDetailsModal from "./UserDetailsModal";
 
-import {
-  EyeOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  ExclamationCircleOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EyeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
+import { API, useUsers } from "../../api/api";
 
 const { confirm } = Modal;
 
@@ -37,8 +20,7 @@ function UsersPage() {
   const [userDetailsData, setUserDetailsData] = useState(null);
   const [blockLoading, setBlockLoading] = useState(false);
 
-  const { allUsers, pagination, isLoading, isError, error, refetch } =
-    useAllUsers(filter);
+  const { users, isLoading, isError, error, refetch } = useUsers(filter);
 
   if (isLoading) {
     return <IsLoading />;
@@ -57,29 +39,43 @@ function UsersPage() {
     });
   };
 
-  const showDeleteConfirm = (id) => {
+  const showDeleteConfirm = (userData) => {
+    const statusData = userData.action == "block" ? "Block" : "Unblock";
+
     confirm({
-      title: "Are you sure you want to Block this user?",
+      title: `Are you sure you want to ${statusData} this user?`,
       icon: <ExclamationCircleOutlined />,
-      content: "Do you want to Block this user?",
-      okText: "Yes, Block",
+      content: `Do you want to ${statusData} this user?`,
+      okText: `Yes, ${statusData}`,
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
-        handleBlock(id);
+        return handleBlock(userData);
       },
     });
   };
 
-  const handleBlock = async (id) => {
+  const handleBlock = async (userData) => {
     setBlockLoading(true);
     try {
-      console.log(id);
-      // await API.delete(`/courses/delete/${id}`);
-      openNotification("success", "Success", "User blocked successfully");
+      const statusData = userData.action == "block" ? "block" : "unblock";
+      const id = userData.id;
+
+      const submitData = {
+        action: statusData,
+        user_id: id,
+      };
+
+      const response = await API.post(
+        `/api/admin_dashboard/block-unblock/`,
+        submitData
+      );
+
+      openNotification("success", "Success", `User ${statusData} successfully`);
       refetch();
     } catch (error) {
       openNotification("error", "Error", "Failed to block user");
+      return Promise.reject(error);
     } finally {
       setBlockLoading(false);
     }
@@ -110,7 +106,7 @@ function UsersPage() {
       key: "name",
       render: (text, record) => (
         <Space size="middle">
-          <Avatar className="w-[40px] h-[40px]" src={record.profile} />
+          <Avatar className="w-[40px] h-[40px]" src={record.profile_picture} />
           <span className="text-white text-[16px]">{text}</span>
         </Space>
       ),
@@ -170,7 +166,7 @@ function UsersPage() {
           <MdBlock
             className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
             loading={blockLoading}
-            onClick={() => showDeleteConfirm(record.id)}
+            onClick={() => showDeleteConfirm(record)}
           />
         </Space>
       ),
@@ -181,12 +177,12 @@ function UsersPage() {
     <div className="">
       <Table
         columns={columns}
-        dataSource={allUsers}
+        dataSource={users.results}
         rowKey="id"
         pagination={{
           current: filter.page,
           pageSize: filter.limit,
-          total: pagination.totalUser,
+          total: users.count,
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "50", "100"],
         }}

@@ -8,10 +8,12 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { signOutAdmin } from "../api/api";
+import { signOutAdmin, useAdminProfile } from "../api/api";
 
 const Navbar = ({ showDrawer }) => {
-const navigate = useNavigate();
+  const { admin, isLoading, isError, error, refetch } = useAdminProfile();
+
+  const navigate = useNavigate();
 
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -32,7 +34,10 @@ const navigate = useNavigate();
     {
       key: "change-password",
       label: (
-        <Link to="/change-password" className="flex items-center gap-2 px-1 py-2">
+        <Link
+          to="/change-password"
+          className="flex items-center gap-2 px-1 py-2"
+        >
           <SettingOutlined /> Change Password
         </Link>
       ),
@@ -40,8 +45,8 @@ const navigate = useNavigate();
     {
       key: "logout",
       label: (
-        <span 
-          onClick={handleSignOut} 
+        <span
+          onClick={handleSignOut}
           className="flex items-center gap-2 px-1 py-2 hover:bg-gray-100"
         >
           <LogoutOutlined /> Logout
@@ -49,6 +54,10 @@ const navigate = useNavigate();
       ),
     },
   ];
+
+  
+
+  console.log(admin);
 
   return (
     <header className="w-full text-white shadow-sm fixed top-0 z-50 ">
@@ -62,19 +71,19 @@ const navigate = useNavigate();
               icon={<MenuOutlined className="text-lg text-white" />}
               onClick={showDrawer}
             />
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="text-4xl font-bold text-[#FE7400] whitespace-nowrap"
             >
-            NACULIS
+              NACULIS
             </Link>
           </div>
 
           {/* Right section */}
           <div className="flex items-center gap-4 lg:gap-8">
-            <Badge 
-              count={10} 
-              size="small" 
+            <Badge
+              count={10}
+              size="small"
               className="cursor-pointer p-2 rounded-full bg-white hover:text-blue-500 transition-colors"
             >
               <BellOutlined
@@ -83,14 +92,14 @@ const navigate = useNavigate();
               />
             </Badge>
 
-            <Dropdown 
-              menu={{ items: profileMenuItems }} 
+            <Dropdown
+              menu={{ items: profileMenuItems }}
               trigger={["click"]}
               placement="bottomRight"
               overlayClassName="w-48"
             >
-              <Avatar 
-                icon={<UserOutlined className="" />} 
+              <Avatar
+                icon={<UserOutlined className="" />}
                 size="large"
                 className="cursor-pointer border border-white hover:opacity-80 transition-opacity"
               />

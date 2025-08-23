@@ -52,7 +52,7 @@ function UserDetailsModal({ userDetailsData, isOpen, onClose }) {
       <div className="text-center mb-6">
         <Avatar
           size={120}
-          src={<img src={userDetailsData?.profile} alt="avatar" />}
+          src={<img src={userDetailsData?.profile_picture} alt="avatar" />}
           className="border-2 border-[#FE7400]"
         />
         <Title level={3} className="!mt-2 !mb-1">

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   XAxis,
   YAxis,
@@ -6,37 +5,37 @@ import {
   ResponsiveContainer,
   LineChart,
   Line,
-  Legend,
   Tooltip,
 } from "recharts";
 
-const UserChart = () => {
-  const data = [
-    { month: "Nov", value: 0 },
-    { month: "Dec", value: 7 },
-    { month: "Jan", value: 13 },
-    { month: "Feb", value: 10 },
-    { month: "Mar", value: 15 },
-    { month: "Apr", value: 13 },
-    { month: "May", value: 18 },
-    { month: "Jun", value: 15 },
-    { month: "Jul", value: 28 },
-  ];
-
+const UserChart = ({ trandsData }) => {
+  const data = trandsData?.months?.map((m, i) => ({
+    month: m.slice(0, 3),
+    value: trandsData?.user_counts[i],
+    xp: trandsData?.xp_trends[i],
+  }));
 
   const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip" style={{ backgroundColor: '#569117', border: '1px solid #ccc', padding: '5px' }}>
-        <p><strong>{label}</strong></p>
-        <p>{`value: ${payload[0].value}`}</p>
-      </div>
-    );
-  }
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="custom-tooltip"
+          style={{
+            backgroundColor: "#569117",
+            border: "1px solid #ccc",
+            padding: "5px",
+          }}
+        >
+          <p>
+            <strong>{label}</strong>
+          </p>
+          <p>{`value: ${payload[0].value}`}</p>
+        </div>
+      );
+    }
 
-  return null;
-};
-
+    return null;
+  };
 
   return (
     <div className="h-[470px] rounded-lg border-[1px] border-[#7ED321]">
@@ -63,7 +62,7 @@ const UserChart = () => {
               tickLine={false}
               tick={{ fontSize: 12, fill: "#F3F3F3" }}
             />
-             <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip />} />
             <Line
               type="monotone"
               dataKey="value"

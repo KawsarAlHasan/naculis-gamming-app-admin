@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BarChart,
   Bar,
@@ -8,50 +7,42 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useTrends } from "../api/api";
 
-const XPTrendsChart = () => {
+const XPTrendsChart = ({ trandsData }) => {
+  const data = trandsData?.months?.map((m, i) => ({
+    name: m.slice(0, 3),
+    value: trandsData?.user_counts[i],
+    xp: trandsData?.xp_trends[i],
+  }));
 
-const {trandsData, isLoading, isError, error, refetch}= useTrends()
-
-  // Demo data that matches the screenshot structure
-  const data = [
-    { name: "Aug", xp: 22 },
-    { name: "Sep", xp: 20 },
-    { name: "Oct", xp: 18 },
-    { name: "Nov", xp: 33 },
-    { name: "Dec", xp: 28 },
-    { name: "Jan", xp: 24 },
-    { name: "Fev", xp: 25 },
-    { name: "Mar", xp: 30 },
-    { name: "Apr", xp: 20 },
-    { name: "May", xp: 25 },
-    { name: "Jun", xp: 20 },
-    { name: "Jul", xp: 30 },
-  ];
-
-  
   const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip" style={{ backgroundColor: '#cb5d00', border: '1px solid #ccc', padding: '5px' }}>
-        <p><strong>{label}</strong></p>
-        <p>{`XP: ${payload[0].payload.xp}`}</p>
-      </div>
-    );
-  }
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="custom-tooltip"
+          style={{
+            backgroundColor: "#cb5d00",
+            border: "1px solid #ccc",
+            padding: "5px",
+          }}
+        >
+          <p>
+            <strong>{label}</strong>
+          </p>
+          <p>{`XP: ${payload[0].payload.xp}`}</p>
+        </div>
+      );
+    }
 
-  return null;
-};
-
-console.log("trandsData", trandsData)
+    return null;
+  };
 
   return (
     <div className="h-[470px] rounded-lg border-[1px] border-[#7ED321]">
       <h2 className="text-[24px] font-semibold pl-[40px] my-7">XP Trends</h2>
       <div className="h-[380px] mt-5 mr-10">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} >
+          <BarChart data={data}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey="name"

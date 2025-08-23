@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-
 export const API = axios.create({
-  baseURL: "http://103.186.20.115:9000",
-  // baseURL: "http://localhost:3001/api/v1",
+  baseURL: "http://10.10.7.85:9000",
 });
 
 API.interceptors.request.use((config) => {
@@ -14,7 +12,6 @@ API.interceptors.request.use((config) => {
   }
   return config;
 });
-
 
 // get admin profile
 export const useAdminProfile = () => {
@@ -43,9 +40,26 @@ export const signOutAdmin = () => {
   window.location.href = "/login";
 };
 
+// get dashboard stats
+export const useDashboardStats = () => {
+  const getData = async () => {
+    const response = await API.get("/api/admin_dashboard/dashboard/stats/");
+    return response.data;
+  };
 
+  const {
+    data: dashboardStats = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["dashboardStats"],
+    queryFn: getData,
+  });
 
-
+  return { dashboardStats, isLoading, isError, error, refetch };
+};
 
 // get Trends
 export const useTrends = () => {
@@ -68,8 +82,29 @@ export const useTrends = () => {
   return { trandsData, isLoading, isError, error, refetch };
 };
 
+// get all users
+export const useUsers = ({ page = 1, limit = 10 }) => {
+  const getData = async () => {
+    const response = await API.get(
+      `/api/admin_dashboard/users/list/?page=${page}&limit=${limit}`
+    );
 
+    return response.data;
+  };
 
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["users", page, limit],
+    queryFn: getData,
+  });
+
+  return { users, isLoading, isError, error, refetch };
+};
 
 // users list
 export const getMockUsers = async ({ page = 1, limit = 10 }) => {
@@ -192,7 +227,6 @@ export const getMockPrivacyPolicy = async () => {
 
   return response.data;
 };
-
 
 // export const API = axios.create({
 //   baseURL: "https://education-management-backend-8jm1.onrender.com/api/v1",
