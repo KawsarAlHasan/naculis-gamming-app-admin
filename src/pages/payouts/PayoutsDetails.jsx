@@ -1,38 +1,25 @@
 import React from "react";
+import { Modal, Typography, Button, Tag, Space } from "antd";
 import {
-  Modal,
-  Typography,
-  Avatar,
-  Divider,
-  Tag,
-  Row,
-  Col,
-  Space,
-  Statistic,
-  Button,
-} from "antd";
-import {
-  UserOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
-  ClockCircleOutlined,
-  StarOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 function PayoutsDetails({ detailsData, isOpen, onClose }) {
-  const statusColor = detailsData?.status === "active" ? "green" : "red";
+  const statusColor =
+    detailsData?.status?.toLowerCase() === "active" ||
+    detailsData?.status?.toLowerCase() === "pending"
+      ? "blue"
+      : "red";
+
   const statusIcon =
-    detailsData?.status === "active" ? (
+    detailsData?.status?.toLowerCase() === "active" ? (
       <CheckCircleOutlined />
     ) : (
       <CloseCircleOutlined />
     );
-
-
 
   return (
     <Modal
@@ -48,18 +35,54 @@ function PayoutsDetails({ detailsData, isOpen, onClose }) {
       width={600}
       className="user-details-modal"
     >
-    
-
-  <div className="w-full">
-    <h1 className="text-[18px] font-bold mb-5 ">Transaction ID: <span className="font-semibold ml-2">#12345678</span></h1>
-    <h1 className="text-[18px] font-bold mb-5 ">Plans: <span className="font-semibold ml-2">Monthly Subscription</span> </h1>
-    <h1 className="text-[18px] font-bold mb-5 ">Date: <span className="font-semibold ml-2">02-24-2024</span> </h1>
-    <h1 className="text-[18px] font-bold mb-5 ">Name: <span className="font-semibold ml-2">{detailsData?.user_name}</span> </h1>
-    <h1 className="text-[18px] font-bold mb-5 ">A/C number: <span className="font-semibold ml-2">{detailsData?.user_name}</span> </h1>
-    <h1 className="text-[18px] font-bold mb-5 ">Email: <span className="font-semibold ml-2">email@gmail.com</span> </h1>
-    <h1 className="text-[18px] font-bold mb-5 ">Transaction amount: <span className="font-semibold ml-2">{detailsData?.amount}</span> </h1>
-  </div>
-     
+      <div className="w-full">
+        <h1 className="text-[18px] font-bold mb-4">
+          Transaction ID:{" "}
+          <span className="font-semibold ml-2">
+            #{detailsData?.payout_id ?? "N/A"}
+          </span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          Date:{" "}
+          <span className="font-semibold ml-2">{detailsData?.date ?? "N/A"}</span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          Name:{" "}
+          <span className="font-semibold ml-2">
+            {detailsData?.user_name ?? "N/A"}
+          </span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          A/C number:{" "}
+          <span className="font-semibold ml-2">{detailsData?.user_id ?? "N/A"}</span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          Email:{" "}
+          <span className="font-semibold ml-2">
+            {detailsData?.email ?? "email@gmail.com"}
+          </span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          Method:{" "}
+          <span className="font-semibold ml-2">{detailsData?.method ?? "N/A"}</span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          Guardian Approval:{" "}
+          <span className="font-semibold ml-2">
+            {detailsData?.guardian_approval ?? "N/A"}
+          </span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          Transaction amount:{" "}
+          <span className="font-semibold ml-2">{detailsData?.amount ?? "N/A"}</span>
+        </h1>
+        <h1 className="text-[18px] font-bold mb-4">
+          Status:{" "}
+          <Tag color={statusColor} icon={statusIcon} className="ml-2">
+            {detailsData?.status ?? "Unknown"}
+          </Tag>
+        </h1>
+      </div>
 
       <div className="flex justify-between mt-5 gap-4">
         <Button className="my-secondary-button w-full">Cancel</Button>

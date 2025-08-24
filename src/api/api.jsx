@@ -106,6 +106,81 @@ export const useUsers = ({ page = 1, limit = 10 }) => {
   return { users, isLoading, isError, error, refetch };
 };
 
+// /api/admin_dashboard/payouts/list/?limit=20&page=1
+export const usePayouts = ({ page = 1, limit = 10 }) => {
+  const getData = async () => {
+    const response = await API.get(
+      `/api/admin_dashboard/payouts/list/?page=${page}&limit=${limit}`
+    );
+
+    return response.data;
+  };
+
+  const {
+    data: payouts = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["payouts", page, limit],
+    queryFn: getData,
+  });
+
+  return { payouts, isLoading, isError, error, refetch };
+};
+
+// /api/admin_dashboard/leaderboard/
+export const useLeaderboards = ({ value = "xp", page = 1, limit = 10 }) => {
+  const getData = async () => {
+    const response = await API.get(
+      `/api/admin_dashboard/leaderboard/${value}/?page=${page}&limit=${limit}`
+    );
+
+    return response.data;
+  };
+
+  const {
+    data: leaderboardData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["leaderboardData", value, page, limit],
+    queryFn: getData,
+  });
+
+  return { leaderboardData, isLoading, isError, error, refetch };
+};
+
+// single leaderboard data
+export const useSingleLeaderboard = ({ value = "xp", id }) => {
+  const getData = async () => {
+    const response = await API.get(
+      `/api/admin_dashboard/leaderboard/${value}/${id}/`
+    );
+
+    return response.data;
+  };
+
+  const {
+    data: leaderboar = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["leaderboar", value, id],
+    queryFn: getData,
+  });
+
+  return { leaderboar, isLoading, isError, error, refetch };
+};
+
+// mock data
+// mock data
+
 // users list
 export const getMockUsers = async ({ page = 1, limit = 10 }) => {
   const res = await axios.get("/users.json");

@@ -7,7 +7,16 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 
-function UserDetails({ userDetailsData, isOpen, onClose }) {
+function UserDetails({
+  rank,
+  userDetailsData,
+  valueName,
+  value,
+  isOpen,
+  onClose,
+}) {
+  // console.log( "userDetailsData", userDetailsData);
+
   return (
     <Modal
       title={
@@ -22,15 +31,17 @@ function UserDetails({ userDetailsData, isOpen, onClose }) {
     >
       <div className="flex flex-col items-center text-center space-y-6">
         {/* Profile Image */}
-        <img
-          src={userDetailsData?.profile}
+       <div className="w-24 h-24 rounded-full !border-4 !border-orange-400">
+         <img
+          src={userDetailsData?.profile_picture}
           alt="User Avatar"
-          className="w-24 h-24 rounded-full object-cover border-4 border-orange-400"
+          className="w-[88px] h-[88px] rounded-full object-cover !border-4 !border-orange-400"
         />
+       </div>
 
         {/* Name and Country */}
         <div>
-          <h2 className="text-xl font-semibold">{userDetailsData?.user_name}</h2>
+          <h2 className="text-xl font-semibold">{userDetailsData?.username}</h2>
           <div className="text-sm text-gray-500 flex items-center justify-center gap-1 mt-1">
             <EnvironmentOutlined />
             <span>{userDetailsData?.country}</span>
@@ -40,34 +51,16 @@ function UserDetails({ userDetailsData, isOpen, onClose }) {
         {/* Stats */}
         <div className="w-full grid grid-cols-2 gap-4">
           <div className="bg-gray-100 p-4 rounded-lg shadow">
-            <h4 className="text-sm text-gray-500">WX Earned</h4>
+            <h4 className="text-sm text-gray-500">{value} Earned</h4>
             <p className="text-lg font-bold text-orange-600">
-              {userDetailsData?.wx_earned}
+              {userDetailsData?.[valueName]}
             </p>
           </div>
 
           <div className="bg-gray-100 p-4 rounded-lg shadow">
             <h4 className="text-sm text-gray-500">Rank</h4>
-            <p className="text-lg font-bold text-green-600">
-              #{userDetailsData?.rank}
-            </p>
+            <p className="text-lg font-bold text-green-600">#{rank}</p>
           </div>
-
-          <div className="bg-gray-100 p-4 rounded-lg shadow col-span-2">
-            <h4 className="text-sm text-gray-500">Last Active</h4>
-            <p className="text-base font-medium text-gray-700">
-              <ClockCircleOutlined className="mr-1" />
-              {dayjs(userDetailsData?.last_active).format("YYYY-MM-DD HH:mm")}
-            </p>
-          </div>
-        </div>
-
-        {/* Badge */}
-        <div className="mt-4">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
-            <StarOutlined className="mr-1" />
-            Badge: {userDetailsData?.badge}
-          </span>
         </div>
       </div>
 

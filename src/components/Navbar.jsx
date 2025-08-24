@@ -55,10 +55,6 @@ const Navbar = ({ showDrawer }) => {
     },
   ];
 
-  
-
-  console.log(admin);
-
   return (
     <header className="w-full text-white shadow-sm fixed top-0 z-50 ">
       <div className=" mx-2 lg:ml-[30px] lg:mr-24 ">
@@ -81,17 +77,6 @@ const Navbar = ({ showDrawer }) => {
 
           {/* Right section */}
           <div className="flex items-center gap-4 lg:gap-8">
-            <Badge
-              count={10}
-              size="small"
-              className="cursor-pointer p-2 rounded-full bg-white hover:text-blue-500 transition-colors"
-            >
-              <BellOutlined
-                className="text-2xl"
-                onClick={() => setDrawerVisible(true)}
-              />
-            </Badge>
-
             <Dropdown
               menu={{ items: profileMenuItems }}
               trigger={["click"]}
@@ -107,19 +92,6 @@ const Navbar = ({ showDrawer }) => {
           </div>
         </div>
       </div>
-
-      <Drawer
-        title="Notifications"
-        placement="right"
-        onClose={() => setDrawerVisible(false)}
-        open={drawerVisible}
-        width={300}
-        bodyStyle={{ padding: 0 }}
-      >
-        <div className="p-4">
-          <p>No new notifications</p>
-        </div>
-      </Drawer>
     </header>
   );
 };

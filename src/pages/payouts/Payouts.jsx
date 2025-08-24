@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Table, Tag, Space, Avatar } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { useAllPayouts } from "../../services/payoutService";
 import PayoutsDetails from "./PayoutsDetails";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
+import { usePayouts } from "../../api/api";
 
 function PayoutsPage() {
   const [filter, setFilter] = useState({
@@ -25,8 +25,7 @@ function PayoutsPage() {
     setIsViewModalOpen(true);
   };
 
-  const { allPayouts, pagination, isLoading, isError, error, refetch } =
-    useAllPayouts(filter);
+  const { payouts, isLoading, isError, error, refetch } = usePayouts(filter);
 
   if (isLoading) {
     return <IsLoading />;
@@ -51,8 +50,9 @@ function PayoutsPage() {
       key: "user_name",
       render: (text, record) => (
         <Space size="middle">
-          {console.log(record)}
           <Avatar className="w-[40px] h-[40px]" src={record.profile} />
+
+          {console.log(record)}
           <span className="text-white text-[16px]">{text}</span>
         </Space>
       ),
@@ -62,7 +62,7 @@ function PayoutsPage() {
       dataIndex: "amount",
       key: "amount",
       render: (amount) => (
-        <span className="text-white text-[16px]">${amount}</span>
+        <span className="text-white text-[16px]">{amount}</span>
       ),
     },
     {
@@ -131,12 +131,12 @@ function PayoutsPage() {
     <div className="">
       <Table
         columns={columns}
-        dataSource={allPayouts}
+        dataSource={payouts.results}
         rowKey="id"
         pagination={{
           current: filter.page,
           pageSize: filter.limit,
-          total: pagination.totalPayOuts,
+          total: payouts.count,
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "50", "100"],
         }}

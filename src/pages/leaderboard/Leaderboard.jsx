@@ -1,17 +1,13 @@
 import { useState } from "react";
-import { Table, Tag, Space, Avatar, Modal, notification } from "antd";
-import {
-  DeleteOutlined,
-  ExclamationCircleOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { useAllLeaderboard } from "../../services/leaderboardService";
+import { Table, Tag, Space, Avatar, Modal,  Select } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { MdBlock } from "react-icons/md";
 import UserDetails from "./UserDetails";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
+import { useLeaderboards } from "../../api/api";
 
 const { confirm } = Modal;
 
@@ -21,14 +17,15 @@ function LeaderboardPage() {
   const [filter, setFilter] = useState({
     page: 1,
     limit: 10,
+    value: "xp",
   });
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [userDetailsData, setUserDetailsData] = useState(null);
-  const [blockLoading, setBlockLoading] = useState(false);
+  const [rank, setRank] = useState(null);
 
-  const { allLeaderboard, pagination, isLoading, isError, error, refetch } =
-    useAllLeaderboard(filter);
+  const { leaderboardData, isLoading, isError, error, refetch } =
+    useLeaderboards(filter);
 
   if (isLoading) {
     return <IsLoading />;
@@ -38,45 +35,14 @@ function LeaderboardPage() {
     return <IsError error={error} refetch={refetch} />;
   }
 
-  const openNotification = (type, message, description) => {
-    notification[type]({
-      message,
-      description,
-      placement: "topRight",
-      duration: 3,
-    });
-  };
+  const valueName = filter.value == "xp" ? "total_xp" : filter.value == "gems" ? "total_gem" :  filter.value == "streak" ? "total_daily_streak" : "total_lesson_perfected";
 
-  const showDeleteConfirm = (id) => {
-    confirm({
-      title: "Are you sure you want to Block this user?",
-      icon: <ExclamationCircleOutlined />,
-      content: "Do you want to Block this user?",
-      okText: "Yes, Block",
-      okType: "danger",
-      cancelText: "Cancel",
-      onOk() {
-        handleBlock(id);
-      },
-    });
-  };
+  
 
-  const handleBlock = async (id) => {
-    setBlockLoading(true);
-    try {
-      console.log(id);
-      // await API.delete(`/courses/delete/${id}`);
-      openNotification("success", "Success", "User blocked successfully");
-      refetch();
-    } catch (error) {
-      openNotification("error", "Error", "Failed to block user");
-    } finally {
-      setBlockLoading(false);
-    }
-  };
 
-  const handleUserDetails = (userData) => {
+  const handleUserDetails = (userData, index) => {
     setUserDetailsData(userData);
+    setRank(index);
     setIsViewModalOpen(true);
   };
 
@@ -98,25 +64,29 @@ function LeaderboardPage() {
       title: <span className="text-[20px]">Rank</span>,
       dataIndex: "rank",
       key: "rank",
-      render: (rank) => <span className="text-white text-[16px]">{rank}</span>,
+      render: (_, __, index) => (
+        <span className="text-white text-[16px]">
+          #{filter.limit * (filter.page - 1) + index + 1}
+        </span>
+      ),
     },
     {
       title: <span className="text-[20px]">User Name</span>,
-      dataIndex: "user_name",
-      key: "user_name",
+      dataIndex: "username",
+      key: "username",
       render: (text, record) => (
         <Space size="middle">
-          <Avatar className="w-[40px] h-[40px]" src={record.profile} />
+          <Avatar className="w-[40px] h-[40px]" src={record.profile_picture} />
           <span className="text-white text-[16px]">{text}</span>
         </Space>
       ),
     },
     {
-      title: <span className="text-[20px]">WX Earned</span>,
-      dataIndex: "wx_earned",
-      key: "wx_earned",
-      render: (wx_earned) => (
-        <span className="text-white text-[16px]">{wx_earned}</span>
+      title: <span className="text-[20px]">{filter.value} Earned</span>,
+      dataIndex: `${valueName}`,
+      key: `${valueName}`,
+      render: (text) => (
+        <span className="text-white text-[16px]">{text}</span>
       ),
     },
     {
@@ -128,53 +98,56 @@ function LeaderboardPage() {
       ),
     },
     {
-      title: <span className="text-[20px]">Badge</span>,
-      dataIndex: "badge",
-      key: "badge",
-      render: (badge) => (
-        <span className="text-white text-[16px]">{badge}</span>
-      ),
-    },
-    {
-      title: <span className="text-[20px]">Last Active</span>,
-      dataIndex: "last_active",
-      key: "last_active",
-      render: (last_active) => {
-        const d = new Date(last_active);
-        const formatted = dayjs(d).fromNow();
-        return <span className="text-white text-[16px]">{formatted}</span>;
-      },
-    },
-    {
       title: <span className="text-[20px]">Action</span>,
       key: "action",
-      render: (_, record) => (
+      render: (_, record, index) => (
         <Space size="middle">
           <EyeOutlined
-            onClick={() => handleUserDetails(record)}
+            onClick={() => handleUserDetails(record, filter.limit * (filter.page - 1) + index + 1)}
             className="text-[23px] cursor-pointer"
-          />
-
-          <MdBlock
-            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
-            loading={blockLoading}
-            onClick={() => showDeleteConfirm(1)}
           />
         </Space>
       ),
     },
   ];
 
+  const handleChange = (value) => {
+    setFilter((prev) => ({
+      ...prev,
+      page: 1,
+      limit: 10,
+      value: value,
+    }));
+  };
+
   return (
     <div className="">
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-bold">{filter.value} Leaderboard</h2>
+        <div className="flex gap-2">
+          <span className="text-[20px] mt-[2px]">Filter:</span>
+          <Select
+            defaultValue="XP"
+            style={{ width: 170 }}
+            onChange={handleChange}
+            options={[
+              { value: "xp", label: "XP" },
+              { value: "gems", label: "Gems" },
+              { value: "streak", label: "Streak" },
+              { value: "perfect-lessons", label: "Perfect Lessons" },
+            ]}
+          />
+        </div>
+      </div>
+
       <Table
         columns={columns}
-        dataSource={allLeaderboard}
+        dataSource={leaderboardData.results}
         rowKey="id"
         pagination={{
           current: filter.page,
           pageSize: filter.limit,
-          total: pagination.totalLeaderboard,
+          total: leaderboardData.count,
           showSizeChanger: true,
           pageSizeOptions: ["10", "20", "50", "100"],
         }}
@@ -187,6 +160,9 @@ function LeaderboardPage() {
 
       <UserDetails
         userDetailsData={userDetailsData}
+        valueName={valueName}
+        rank={rank}
+        value={filter.value}
         isOpen={isViewModalOpen}
         onClose={handleModalClose}
       />
