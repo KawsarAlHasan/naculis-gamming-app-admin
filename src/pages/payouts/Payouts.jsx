@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Table, Tag, Space, Avatar } from "antd";
+import { Table, Tag, Space, Avatar, message } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import PayoutsDetails from "./PayoutsDetails";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
-import { usePayouts } from "../../api/api";
+import { API, usePayouts } from "../../api/api";
+import { MdBlock } from "react-icons/md";
+import StatusChange from "./StatusChange";
 
 function PayoutsPage() {
   const [filter, setFilter] = useState({
@@ -15,6 +17,9 @@ function PayoutsPage() {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [detailsData, setDetailsData] = useState(null);
 
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [payoutData, setPayoutData] = useState(null);
+
   const handleModalClose = () => {
     setDetailsData(null);
     setIsViewModalOpen(false);
@@ -23,6 +28,16 @@ function PayoutsPage() {
   const handleUserDetails = (userData) => {
     setDetailsData(userData);
     setIsViewModalOpen(true);
+  };
+
+  const handleStatusModalClose = () => {
+    setPayoutData(null);
+    setIsStatusModalOpen(false);
+  };
+
+  const handleStatusChangeq = (userData) => {
+    setPayoutData(userData);
+    setIsStatusModalOpen(true);
   };
 
   const { payouts, isLoading, isError, error, refetch } = usePayouts(filter);
@@ -122,10 +137,33 @@ function PayoutsPage() {
             onClick={() => handleUserDetails(record)}
             className="text-[23px]"
           />
+          <MdBlock
+            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
+            onClick={() => handleStatusChangeq(record)}
+          />
         </Space>
       ),
     },
   ];
+
+  const handleStatusChange = async (record) => {
+    try {
+      const payload = {
+        payout_id: 37,
+        action: "approve",
+      };
+
+      // need status change  ["approve", "reject", "fail"]
+
+      const res = await API.post(
+        `/api/admin_dashboard/payouts/process/`,
+        payload
+      );
+    } catch (error) {
+      message.error("Failed to change status. Please try again.");
+      console.log(error);
+    }
+  };
 
   return (
     <div className="">
@@ -151,6 +189,13 @@ function PayoutsPage() {
         detailsData={detailsData}
         isOpen={isViewModalOpen}
         onClose={handleModalClose}
+      />
+
+      <StatusChange
+        payoutData={payoutData}
+        isOpen={isStatusModalOpen}
+        onClose={handleStatusModalClose}
+        refetch={refetch}
       />
     </div>
   );

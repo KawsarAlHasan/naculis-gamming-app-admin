@@ -106,7 +106,73 @@ export const useUsers = ({ page = 1, limit = 10 }) => {
   return { users, isLoading, isError, error, refetch };
 };
 
-// /api/admin_dashboard/payouts/list/?limit=20&page=1
+// get all users
+export const useAllUsersList = () => {
+  const getData = async () => {
+    const response = await API.get(`/api/admin_dashboard/basic-userlist/`);
+
+    return response.data;
+  };
+
+  const {
+    data: alluserList = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["alluserList"],
+    queryFn: getData,
+  });
+
+  return { alluserList, isLoading, isError, error, refetch };
+};
+
+// get all users
+export const useAllGroupList = () => {
+  const getData = async () => {
+    const response = await API.get(`/api/core/grouplist/`);
+
+    return response.data;
+  };
+
+  const {
+    data: allGroupList = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["allGroupList"],
+    queryFn: getData,
+  });
+
+  return { allGroupList, isLoading, isError, error, refetch };
+};
+
+// get all users
+export const useAllAdminList = () => {
+  const getData = async () => {
+    const response = await API.get(`/api/admin_dashboard/adminlist/`);
+
+    return response.data;
+  };
+
+  const {
+    data: allAdmins = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["allAdmins"],
+    queryFn: getData,
+  });
+
+  return { allAdmins, isLoading, isError, error, refetch };
+};
+
+// payouts data
 export const usePayouts = ({ page = 1, limit = 10 }) => {
   const getData = async () => {
     const response = await API.get(
@@ -130,7 +196,55 @@ export const usePayouts = ({ page = 1, limit = 10 }) => {
   return { payouts, isLoading, isError, error, refetch };
 };
 
-// /api/admin_dashboard/leaderboard/
+// tasks data
+export const useTasksView = ({ page = 1, limit = 10 }) => {
+  const getData = async () => {
+    const response = await API.get(
+      `/api/tasks/admin/tasks-view/?page=${page}&limit=${limit}`
+    );
+
+    return response.data;
+  };
+
+  const {
+    data: tasksViews = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["tasksViews", page, limit],
+    queryFn: getData,
+  });
+
+  return { tasksViews, isLoading, isError, error, refetch };
+};
+
+// flagged content data
+export const useFlaggedContent = ({ page = 1, limit = 10 }) => {
+  const getData = async () => {
+    const response = await API.get(
+      `/api/admin_dashboard/flagged-content/?page=${page}&limit=${limit}`
+    );
+
+    return response.data;
+  };
+
+  const {
+    data: flaggedContentData = [],
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["flaggedContentData", page, limit],
+    queryFn: getData,
+  });
+
+  return { flaggedContentData, isLoading, isError, error, refetch };
+};
+
+// Leaderboard data
 export const useLeaderboards = ({ value = "xp", page = 1, limit = 10 }) => {
   const getData = async () => {
     const response = await API.get(

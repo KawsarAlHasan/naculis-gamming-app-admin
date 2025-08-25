@@ -33,6 +33,7 @@ const Sidebar = ({ onClick }) => {
     if (path === "/payouts") return ["4"];
     if (path === "/tasks") return ["5"];
     if (path === "/leaderboard") return ["6"];
+    if (path === "/administrators") return ["administrators"];
     if (path === "/profile") return ["7-1"];
     if (path === "/terms-conditions") return ["7-2"];
     if (path === "/privacy-policy") return ["7-3"];
@@ -70,6 +71,11 @@ const Sidebar = ({ onClick }) => {
       key: "6",
       icon: <SlBadge />,
       label: <Link to="/leaderboard">Leaderboard</Link>,
+    },
+    {
+      key: "administrators",
+      icon: <SlBadge />,
+      label: <Link to="/administrators">Administrators</Link>,
     },
     {
       key: "7",

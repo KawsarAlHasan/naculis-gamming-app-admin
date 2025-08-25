@@ -16,6 +16,7 @@ import ForgotPassword from "../pages/login/ForgotPassword";
 import CheckCode from "../pages/login/CheckCode";
 import SetNewPassword from "../pages/login/SetNewPassword";
 import PrivateRoute from "./PrivateRoute";
+import Admins from "../pages/administrators/Admins";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "/privacy-policy",
         element: <PrivacyPolicy />,
+      },
+      {
+        path: "/administrators",
+        element: <Admins />,
       },
 
       {

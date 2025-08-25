@@ -32,7 +32,6 @@ function TasksDetails({ detailsData, isOpen, onClose }) {
       <CloseCircleOutlined />
     );
 
-  console.log(detailsData);
 
   return (
     <Modal

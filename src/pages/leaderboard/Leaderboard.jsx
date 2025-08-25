@@ -127,7 +127,7 @@ function LeaderboardPage() {
         <div className="flex gap-2">
           <span className="text-[20px] mt-[2px]">Filter:</span>
           <Select
-            defaultValue="XP"
+            defaultValue={filter.value}
             style={{ width: 170 }}
             onChange={handleChange}
             options={[

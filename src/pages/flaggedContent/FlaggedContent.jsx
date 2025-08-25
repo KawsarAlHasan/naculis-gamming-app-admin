@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Table, Tag, Space, Avatar } from "antd";
-import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { useAllFlaggedContent } from "../../services/flaggedContentService";
+import { Table, Tag, Space, Avatar, Tooltip } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
 import FlaggedContentDetails from "./FlaggedContentDetails";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
+import { useFlaggedContent } from "../../api/api";
 
 function FlaggedContentPage() {
   const [filter, setFilter] = useState({
@@ -20,8 +20,8 @@ function FlaggedContentPage() {
     setIsViewModalOpen(false);
   };
 
-  const { allFlaggedContent, pagination, isLoading, isError, error, refetch } =
-    useAllFlaggedContent(filter);
+  const { flaggedContentData, isLoading, isError, error, refetch } =
+    useFlaggedContent(filter);
 
   if (isLoading) {
     return <IsLoading />;
@@ -47,12 +47,15 @@ function FlaggedContentPage() {
   const columns = [
     {
       title: <span className="text-[20px]">User Name</span>,
-      dataIndex: "user_name",
-      key: "user_name",
+      dataIndex: "username",
+      key: "username",
       render: (text, record) => (
         <Space size="middle">
-          <Avatar className="w-[40px] h-[40px]" src={record.profile} />
-          <span className="text-white text-[16px]">{text}</span>
+          <Avatar className="w-[40px] h-[40px]" src={record.profile_picture} />
+          <div>
+            <h1 className="text-white text-[16px]">{record.username}</h1>
+            <span className="text-gray-400 text-[14px]">{record.email}</span>
+          </div>
         </Space>
       ),
     },
@@ -78,9 +81,35 @@ function FlaggedContentPage() {
       title: <span className="text-[20px]">Flag Summary</span>,
       dataIndex: "flag_summary",
       key: "flag_summary",
-      render: (flag_summary) => (
-        <span className="text-white text-[16px]">{flag_summary}</span>
-      ),
+      render: (flag_summary) => {
+        const displayText =
+          flag_summary && flag_summary.length > 40
+            ? flag_summary.slice(0, 40) + "..."
+            : flag_summary;
+
+        return (
+          <Tooltip title={flag_summary}>
+            <span className="text-white text-[16px]">{displayText}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      title: <span className="text-[20px]">Flagged Reason</span>,
+      dataIndex: "flagged_reason",
+      key: "flagged_reason",
+      render: (flagged_reason) => {
+        const displayText =
+          flagged_reason && flagged_reason.length > 40
+            ? flagged_reason.slice(0, 40) + "..."
+            : flagged_reason;
+
+        return (
+          <Tooltip title={flagged_reason}>
+            <span className="text-white text-[16px]">{displayText}</span>
+          </Tooltip>
+        );
+      },
     },
 
     {
@@ -118,14 +147,14 @@ function FlaggedContentPage() {
     <div className="">
       <Table
         columns={columns}
-        dataSource={allFlaggedContent}
+        dataSource={flaggedContentData.results}
         rowKey="id"
         pagination={{
           current: filter.page,
           pageSize: filter.limit,
-          total: pagination.totalFlaggedContent,
-          showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "50", "100"],
+          total: flaggedContentData.count,
+          showSizeChanger: false,
+          // pageSizeOptions: ["10", "20", "50", "100"],
         }}
         onChange={handleTableChange}
         loading={isLoading}
@@ -138,6 +167,7 @@ function FlaggedContentPage() {
         userDetailsData={userDetailsData}
         isOpen={isViewModalOpen}
         onClose={handleModalClose}
+        refetch={refetch}
       />
     </div>
   );

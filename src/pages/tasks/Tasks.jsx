@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Table, Tag, Space, Avatar, notification, Modal } from "antd";
-import { DeleteOutlined, ExclamationCircleOutlined, EyeOutlined } from "@ant-design/icons";
-import { useAllTasks } from "../../services/tasksService";
-import { MdBlock } from "react-icons/md";
+import {
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import TasksDetails from "./TasksDetails";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
+import { useTasksView } from "../../api/api";
+import AddTasks from "./AddTasks";
 
 const { confirm } = Modal;
 
@@ -15,12 +19,12 @@ function TasksPage() {
     limit: 10,
   });
 
-    const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [detailsData, setDetailsData] = useState(null);
   const [blockLoading, setBlockLoading] = useState(false);
 
-  const { allTasks, pagination, isLoading, isError, error, refetch } =
-    useAllTasks(filter);
+  const { tasksViews, isLoading, isError, error, refetch } =
+    useTasksView(filter);
 
   if (isLoading) {
     return <IsLoading />;
@@ -29,7 +33,6 @@ function TasksPage() {
   if (isError) {
     return <IsError error={error} refetch={refetch} />;
   }
-
 
 
   const handleUserDetails = (userData) => {
@@ -42,7 +45,6 @@ function TasksPage() {
     setIsViewModalOpen(false);
   };
 
-
   const handleTableChange = (pagination) => {
     setFilter((prev) => ({
       ...prev,
@@ -51,17 +53,15 @@ function TasksPage() {
     }));
   };
 
-
-    const openNotification = (type, message, description) => {
+  const openNotification = (type, message, description) => {
     notification[type]({
       message,
       description,
       placement: "topRight",
       duration: 3,
     });
-  }
+  };
 
-  
   const showDeleteConfirm = (id) => {
     confirm({
       title: "Are you sure you want to Block this Tasks?",
@@ -79,7 +79,6 @@ function TasksPage() {
   const handleBlock = async (id) => {
     setBlockLoading(true);
     try {
-      console.log(id);
       // await API.delete(`/courses/delete/${id}`);
       openNotification("success", "Success", "Tasks blocked successfully");
       refetch();
@@ -90,17 +89,27 @@ function TasksPage() {
     }
   };
 
-
   const columns = [
     {
       title: <span className="text-[20px]">User Name</span>,
-      dataIndex: "user_name",
-      key: "user_name",
+      dataIndex: "user",
+      key: "user",
       render: (text, record) => (
         <Space size="middle">
-          <Avatar className="w-[40px] h-[40px]" src={record.profile} />
-          <span className="text-white text-[16px]">{text}</span>
+          <Avatar className="w-[40px] h-[40px]" src={text.avatar} />
+          <div>
+            <h1 className="text-white text-[16px]">{text.name}</h1>
+            <span className="text-gray-400 text-[14px]">{text.email}</span>
+          </div>
         </Space>
+      ),
+    },
+    {
+      title: <span className="text-[20px]">Task Name</span>,
+      dataIndex: "task_name",
+      key: "task_name",
+      render: (task_name) => (
+        <span className="text-white text-[16px]">{task_name}</span>
       ),
     },
     {
@@ -138,40 +147,41 @@ function TasksPage() {
       ),
     },
 
-    {
-      title: <span className="text-[20px]">Action</span>,
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Space size="middle">
-          <EyeOutlined
-            onClick={() => handleUserDetails(record)}
-            className="text-[23px] cursor-pointer"
-          />
+    // {
+    //   title: <span className="text-[20px]">Action</span>,
+    //   key: "action",
+    //   render: (_, record) => (
+    //     <Space size="middle">
+    //       <Space size="middle">
+    //         <EyeOutlined
+    //           onClick={() => handleUserDetails(record)}
+    //           className="text-[23px] cursor-pointer"
+    //         />
 
-          <MdBlock
-            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
-            loading={blockLoading}
-            onClick={() => showDeleteConfirm(1)}
-          />
-        </Space>
-        </Space>
-      ),
-    },
+    //         <MdBlock
+    //           className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
+    //           loading={blockLoading}
+    //           onClick={() => showDeleteConfirm(1)}
+    //         />
+    //       </Space>
+    //     </Space>
+    //   ),
+    // },
   ];
 
   return (
     <div className="">
+      <AddTasks usersRefetch={refetch} />
       <Table
         columns={columns}
-        dataSource={allTasks}
+        dataSource={tasksViews.results}
         rowKey="id"
         pagination={{
           current: filter.page,
           pageSize: filter.limit,
-          total: pagination.totalTasks,
-          showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "50", "100"],
+          total: tasksViews.count,
+          showSizeChanger: false,
+          // pageSizeOptions: ["10", "20", "50", "100"],
         }}
         onChange={handleTableChange}
         loading={isLoading}
@@ -181,7 +191,7 @@ function TasksPage() {
       />
 
       <TasksDetails
-         detailsData={detailsData}
+        detailsData={detailsData}
         isOpen={isViewModalOpen}
         onClose={handleModalClose}
       />
