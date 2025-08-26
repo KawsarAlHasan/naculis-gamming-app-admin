@@ -146,25 +146,6 @@ function PayoutsPage() {
     },
   ];
 
-  const handleStatusChange = async (record) => {
-    try {
-      const payload = {
-        payout_id: 37,
-        action: "approve",
-      };
-
-      // need status change  ["approve", "reject", "fail"]
-
-      const res = await API.post(
-        `/api/admin_dashboard/payouts/process/`,
-        payload
-      );
-    } catch (error) {
-      message.error("Failed to change status. Please try again.");
-      console.log(error);
-    }
-  };
-
   return (
     <div className="">
       <Table

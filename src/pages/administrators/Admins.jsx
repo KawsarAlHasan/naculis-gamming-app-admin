@@ -3,7 +3,11 @@ import { Table, Tag, Space, Avatar, Modal, notification } from "antd";
 import { MdBlock } from "react-icons/md";
 // import UserDetailsModal from "./UserDetailsModal";
 
-import { EyeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  ExclamationCircleOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
 import { API, useAllAdminList, useUsers } from "../../api/api";
@@ -20,10 +24,10 @@ function Admins() {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [userDetailsData, setUserDetailsData] = useState(null);
   const [blockLoading, setBlockLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const { allAdmins, isLoading, isError, error, refetch } = useAllAdminList();
 
-  console.log("allAdmins", allAdmins);
 
   if (isLoading) {
     return <IsLoading />;
@@ -42,7 +46,7 @@ function Admins() {
     });
   };
 
-  const showDeleteConfirm = (userData) => {
+  const showBlockAdminConfirm = (userData) => {
     const statusData = userData.action == "block" ? "Block" : "Unblock";
 
     confirm({
@@ -81,6 +85,35 @@ function Admins() {
       return Promise.reject(error);
     } finally {
       setBlockLoading(false);
+    }
+  };
+
+  const showDeleteConfirm = (id) => {
+    confirm({
+      title: `Are you sure you want to delete this Admin?`,
+      icon: <ExclamationCircleOutlined />,
+      content: `Do you want to delete this Admin?`,
+      okText: `Yes, Delete`,
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk() {
+        return handleDeleteAdmin(id);
+      },
+    });
+  };
+
+  const handleDeleteAdmin = async (id) => {
+    setDeleteLoading(true);
+    try {
+      await API.delete(`/api/admin_dashboard/delete-user/${id}/`);
+
+      openNotification("success", "Success", `Admin deleted successfully`);
+      refetch();
+    } catch (error) {
+      openNotification("error", "Error", "Failed to delete admin");
+      return Promise.reject(error);
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -132,15 +165,31 @@ function Admins() {
     {
       title: <span className="text-[20px]">Action</span>,
       key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <MdBlock
-            className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
-            loading={blockLoading}
-            onClick={() => showDeleteConfirm(record)}
-          />
-        </Space>
-      ),
+      render: (_, record) => {
+        const isSuperAdmin = record.role !== "admin";
+
+        return (
+          <Space size="middle">
+            <MdBlock
+              className="text-[23px] text-red-400 hover:text-red-300 cursor-pointer"
+              loading={blockLoading}
+              onClick={() => showBlockAdminConfirm(record)}
+            />
+
+            <DeleteOutlined
+              className={`text-[23px] text-red-400 rounded-sm ${
+                isSuperAdmin
+                  ? "cursor-not-allowed opacity-50"
+                  : "hover:text-red-300 cursor-pointer"
+              }`}
+              loading={deleteLoading}
+              onClick={
+                isSuperAdmin ? undefined : () => showDeleteConfirm(record.id)
+              }
+            />
+          </Space>
+        );
+      },
     },
   ];
 

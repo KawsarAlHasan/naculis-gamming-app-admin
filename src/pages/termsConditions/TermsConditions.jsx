@@ -3,12 +3,12 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Modal, Spin, message, Form } from "antd";
-import { useTermsConditions } from "../../services/termsCondition";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
+import { API, useTermsConditions } from "../../api/api";
 
 function TermsConditions() {
-  const { termsConditionsData, isLoading, isError, error, refetch } =
+  const { termsCondition, isLoading, isError, error, refetch } =
     useTermsConditions();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -17,13 +17,11 @@ function TermsConditions() {
 
   const handleEdit = () => {
     setIsModalOpen(true);
-    setContent(termsConditionsData.content);
+    setContent(termsCondition.content);
     form.setFieldsValue({
-      content: termsConditionsData.content,
+      content: termsCondition.content,
     });
   };
-
-  console.log(termsConditionsData, "termsConditionsData");
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -36,10 +34,13 @@ function TermsConditions() {
       const values = await form.validateFields();
       setIsSaving(true);
 
-      // await API.put(`/settings/terms/update/${termsConditionsData.id}`, {
-      //   ...values,
-      //   content,
-      // });
+      await API.put(
+        `/api/admin_dashboard/terms-and-conditions/${termsCondition.id}/`,
+        {
+          ...values,
+          content,
+        }
+      );
 
       message.success("Terms information updated successfully");
       setIsModalOpen(false);
@@ -80,12 +81,10 @@ function TermsConditions() {
 
         <p className="mb-2">
           <span className="font-bold">Last Updated:</span>{" "}
-          {new Date(termsConditionsData.updated_at).toLocaleString()}
+          {new Date(termsCondition.updated_at).toLocaleString()}
         </p>
 
-        <div
-          dangerouslySetInnerHTML={{ __html: termsConditionsData.content }}
-        />
+        <div dangerouslySetInnerHTML={{ __html: termsCondition.content }} />
       </div>
 
       {/* Modal for Editing Terms */}

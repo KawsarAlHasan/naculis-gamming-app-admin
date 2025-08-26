@@ -3,12 +3,13 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Modal, Spin, message, Form } from "antd";
-import { usePrivacyPolicy } from "../../services/privacyService";
 import IsLoading from "../../components/IsLoading";
 import IsError from "../../components/IsError";
+import { API, usePrivacyPolicy } from "../../api/api";
 
 function PrivacyPolicy() {
-  const { privacyPolicyData, isLoading, isError, error, refetch } = usePrivacyPolicy();
+  const { privacyPolicy, isLoading, isError, error, refetch } =
+    usePrivacyPolicy();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [content, setContent] = useState("");
@@ -16,12 +17,11 @@ function PrivacyPolicy() {
 
   const handleEdit = () => {
     setIsModalOpen(true);
-    setContent(privacyPolicyData.content);
+    setContent(privacyPolicy.content);
     form.setFieldsValue({
-      content: privacyPolicyData.content,
+      content: privacyPolicy.content,
     });
   };
-
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -34,16 +34,19 @@ function PrivacyPolicy() {
       const values = await form.validateFields();
       setIsSaving(true);
 
-      // await API.put(`/settings/terms/update/${privacyPolicyData.id}`, {
-      //   ...values,
-      //   content,
-      // });
+      await API.put(
+        `/api/admin_dashboard/privacy-policy/${privacyPolicy.id}/`,
+        {
+          ...values,
+          content,
+        }
+      );
 
-      message.success("Terms information updated successfully");
+      message.success("Privacy Policy information updated successfully");
       setIsModalOpen(false);
       refetch();
     } catch (error) {
-      message.error(error.message || "Failed to update terms.");
+      message.error(error.message || "Failed to update Privacy Policy.");
     } finally {
       setIsSaving(false);
     }
@@ -57,14 +60,13 @@ function PrivacyPolicy() {
     return <IsError error={error} refetch={refetch} />;
   }
 
-
   return (
     <div className=" min-h-[65vh] flex items-center justify-center">
       <div className="p-6 shadow-lg w-full">
         <div className="flex justify-between">
           <div>
             <p className="mb-2">
-              <span className="font-bold">Terms:</span>
+              <span className="font-bold">Privacy Policy:</span>
             </p>
           </div>
           <Button
@@ -79,15 +81,15 @@ function PrivacyPolicy() {
 
         <p className="mb-2">
           <span className="font-bold">Last Updated:</span>{" "}
-          {new Date(privacyPolicyData.updated_at).toLocaleString()}
+          {new Date(privacyPolicy.updated_at).toLocaleString()}
         </p>
 
-        <div dangerouslySetInnerHTML={{ __html: privacyPolicyData.content }} />
+        <div dangerouslySetInnerHTML={{ __html: privacyPolicy.content }} />
       </div>
 
-      {/* Modal for Editing Terms */}
+      {/* Modal for Editing Privacy Policy */}
       <Modal
-        title="Edit Terms Information"
+        title="Edit Privacy Policy Information"
         open={isModalOpen}
         onCancel={handleCancel}
         width={1000}
@@ -111,10 +113,14 @@ function PrivacyPolicy() {
             label="Content"
             rules={[{ required: true, message: "Content is required" }]}
           >
-            <ReactQuill theme="snow" value={content} onChange={(val) => {
-              setContent(val);
-              form.setFieldsValue({ content: val }); // sync with form
-            }} />
+            <ReactQuill
+              theme="snow"
+              value={content}
+              onChange={(val) => {
+                setContent(val);
+                form.setFieldsValue({ content: val }); // sync with form
+              }}
+            />
           </Form.Item>
         </Form>
       </Modal>

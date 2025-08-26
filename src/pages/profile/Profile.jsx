@@ -1,31 +1,78 @@
 import React, { useRef, useState } from "react";
-import { Avatar, Tabs } from "antd";
+import { Avatar, message, Tabs } from "antd";
 import { EditOutlined } from "@ant-design/icons";
-import { MdLockReset } from 'react-icons/md';
+import { MdLockReset } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { FiCamera } from "react-icons/fi";
 import ChangePassword from "../../components/ChangePassword";
 import EditProfile from "../../components/EditProfile";
+import { API, useAdminProfile } from "../../api/api";
+import IsLoading from "../../components/IsLoading";
+import IsError from "../../components/IsError";
 
 const { TabPane } = Tabs;
 
 function Profile() {
+  const {
+    admin: adminData,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useAdminProfile();
+
   const fileInputRef = useRef(null);
   const [avatarUrl, setAvatarUrl] = useState(
-    "https://images.news18.com/ibnlive/uploads/2021/08/shah-rukh-khan-01-16300515664x3.jpg"
+    adminData?.profile_picture ||
+      "https://images.news18.com/ibnlive/uploads/2021/08/shah-rukh-khan-01-16300515664x3.jpg"
   );
 
   const handleAvatarClick = () => {
-    fileInputRef.current.click(); 
+    fileInputRef.current.click();
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const url = URL.createObjectURL(file);
       setAvatarUrl(url);
     }
+
+    try {
+      const formData = new FormData();
+
+      const profileImage = event.target.files[0];
+      if (profileImage) {
+        formData.append("profile_picture", file);
+      }
+
+      const res = await API.put(
+        "/api/admin_dashboard/admin-profile/",
+        formData
+      );
+
+      console.log(res, "res");
+
+      if (res.status === 200) {
+        message.success("Profile picture updated successfully!");
+        refetch();
+      }
+    } catch (error) {
+      message.error("Failed to update profile. Please try again.");
+
+      console.log(error);
+    }
   };
+
+  if (isLoading) {
+    return <IsLoading />;
+  }
+
+  if (isError) {
+    return <IsError refetch={refetch} error={error} />;
+  }
+
+  console.log(adminData, "adminData");
 
   return (
     <div className="flex justify-center items-center">
@@ -55,11 +102,15 @@ function Profile() {
         </div>
 
         <h2 className="text-[30px] font-semibold text-white mt-4">
-          Shah Rukh Khan
+          {adminData?.first_name} {adminData?.last_name}
         </h2>
 
+        <div className="custom-tabs mb-6 mt-4">
+           <EditProfile adminData={adminData} refetch={refetch} />
+        </div>
+
         {/* Tabs */}
-        <Tabs defaultActiveKey="1" className="custom-tabs mb-6 mt-4">
+        {/* <Tabs defaultActiveKey="1" className="custom-tabs mb-6 mt-4">
           <TabPane
             tab={
               <span className="flex items-center gap-2">
@@ -69,7 +120,7 @@ function Profile() {
             }
             key="1"
           >
-            <EditProfile />
+            <EditProfile adminData={adminData} refetch={refetch} />
           </TabPane>
 
           <TabPane
@@ -83,7 +134,7 @@ function Profile() {
           >
             <ChangePassword />
           </TabPane>
-        </Tabs>
+        </Tabs> */}
       </div>
 
       <style jsx global>{`
