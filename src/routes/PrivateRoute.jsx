@@ -14,6 +14,7 @@ const PrivateRoute = ({ children }) => {
   }
 
   if (isError || error || !admin || !token) {
+    localStorage.removeItem("token");
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
