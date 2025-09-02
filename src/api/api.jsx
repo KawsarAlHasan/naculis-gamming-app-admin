@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://10.10.7.85:9000",
+  baseURL: "http://103.186.20.115:10002",
 });
 
 API.interceptors.request.use((config) => {

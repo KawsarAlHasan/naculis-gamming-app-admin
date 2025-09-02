@@ -11,6 +11,8 @@ import { MdOutlinePayment, MdLeaderboard } from "react-icons/md";
 import { FaBuildingFlag } from "react-icons/fa6";
 import { SlBadge } from "react-icons/sl";
 import { signOutAdmin } from "../api/api";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+
 
 
 const { SubMenu } = Menu;
@@ -74,7 +76,7 @@ const Sidebar = ({ onClick }) => {
     },
     {
       key: "administrators",
-      icon: <SlBadge />,
+      icon: <MdOutlineAdminPanelSettings />,
       label: <Link to="/administrators">Administrators</Link>,
     },
     {
